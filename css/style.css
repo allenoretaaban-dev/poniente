@@ -1,0 +1,372 @@
+/* ===================================================================
+   MARRAM POINT — design tokens
+   Display: Fraunces (serif, optical size + italic for accent words)
+   Body:    Manrope
+   Utility: IBM Plex Mono (tide times, room numbers, data)
+=================================================================== */
+:root{
+  --basalt:      #0F1B1B;   /* near-black teal, primary dark */
+  --deep-teal:   #17302D;   /* secondary dark, panels */
+  --foam:        #F4EFE6;   /* warm off-white background */
+  --foam-dim:    #E8E0D2;   /* slightly deeper foam for cards */
+  --sea:         #7FA69B;   /* sea-glass green accent */
+  --sea-deep:    #4C7A6E;
+  --brass:       #C08A3E;   /* warm accent, CTAs, rules */
+  --brass-light: #D9A75C;
+  --ink:         #16211F;   /* body text on light */
+  --ink-soft:    #4A5957;
+  --line:        rgba(15,27,27,0.12);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Manrope', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --radius: 2px;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--foam);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,.display{
+  font-family:var(--font-display);
+  font-weight:600;
+  color:var(--basalt);
+  letter-spacing:-0.01em;
+}
+
+em, .accent-italic{
+  font-style:italic;
+  font-weight:400;
+  color:var(--brass);
+}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--brass);
+}
+
+.text-sea{ color:var(--sea-deep) !important; }
+.bg-basalt{ background:var(--basalt) !important; }
+.bg-deep-teal{ background:var(--deep-teal) !important; }
+.bg-foam-dim{ background:var(--foam-dim) !important; }
+
+a{ color:inherit; text-decoration:none; }
+
+/* ---------- Buttons ---------- */
+.btn-brass{
+  background:var(--brass);
+  border:1px solid var(--brass);
+  color:var(--basalt);
+  font-family:var(--font-mono);
+  font-size:0.8rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:0.85rem 1.9rem;
+  border-radius:var(--radius);
+  transition:background .25s ease, color .25s ease, transform .25s ease;
+}
+.btn-brass:hover{ background:var(--brass-light); color:var(--basalt); transform:translateY(-1px); }
+
+.btn-outline-foam{
+  background:transparent;
+  border:1px solid rgba(244,239,230,0.5);
+  color:var(--foam);
+  font-family:var(--font-mono);
+  font-size:0.8rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:0.85rem 1.9rem;
+  border-radius:var(--radius);
+  transition:all .25s ease;
+}
+.btn-outline-foam:hover{ background:rgba(244,239,230,0.1); border-color:var(--foam); color:var(--foam); }
+
+.btn-line{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--basalt);
+  border-bottom:1px solid var(--brass);
+  padding-bottom:2px;
+  transition:opacity .2s;
+}
+.btn-line:hover{ opacity:0.65; color:var(--basalt); }
+
+/* ---------- Navbar ---------- */
+.navbar-marram{
+  padding:1.35rem 0;
+  background:rgba(15,27,27,0.92);
+  backdrop-filter:blur(6px);
+}
+.navbar-marram .navbar-brand{
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  color:var(--foam);
+  letter-spacing:0.01em;
+}
+.navbar-marram .navbar-brand span{ color:var(--brass); }
+.navbar-marram .nav-link{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(244,239,230,0.75);
+  margin:0 0.85rem;
+  padding:0.4rem 0 !important;
+  border-bottom:1px solid transparent;
+  transition:all .2s;
+}
+.navbar-marram .nav-link:hover,
+.navbar-marram .nav-link.active{
+  color:var(--foam);
+  border-bottom-color:var(--brass);
+}
+.navbar-toggler{ border:none; box-shadow:none !important; }
+.navbar-toggler-icon{ filter:invert(1); }
+
+/* ---------- Wave divider (signature motif) ----------
+   A single drawn line, like a depth/tide chart, used to
+   separate sections instead of hard borders. */
+.tide-divider{
+  width:100%;
+  height:48px;
+  display:block;
+  overflow:hidden;
+}
+.tide-wave-motion{
+  transform-box:fill-box;
+  animation:tide-drift 32s linear infinite;
+}
+.tide-divider .tide-fill{
+  stroke:none;
+  fill:var(--foam);
+}
+.tide-divider.to-foam-dim .tide-fill{ fill:var(--foam-dim); }
+.tide-divider .tide-line{
+  fill:none;
+  stroke:var(--brass);
+  stroke-width:1.25;
+  opacity:0.55;
+}
+.tide-divider.on-dark .tide-line{ stroke:var(--sea); opacity:0.6; }
+@keyframes tide-drift{ to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion:reduce){ .tide-wave-motion{ animation:none; } }
+
+/* ---------- Tide strip (signature data motif) ----------
+   Recurs on every page: reads like a tide/almanac table but
+   carries resort info (check-in, sunset, etc). */
+.tide-strip{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  letter-spacing:0.04em;
+  color:var(--foam);
+  border-top:1px solid rgba(244,239,230,0.15);
+  border-bottom:1px solid rgba(244,239,230,0.15);
+}
+.tide-strip .tide-item{
+  padding:0.9rem 0;
+  text-align:center;
+  border-right:1px solid rgba(244,239,230,0.12);
+}
+.tide-strip .tide-item:last-child{ border-right:none; }
+.tide-strip .tide-label{
+  display:block;
+  text-transform:uppercase;
+  color:var(--sea);
+  font-size:0.68rem;
+  letter-spacing:0.14em;
+  margin-bottom:0.2rem;
+}
+.tide-strip .tide-value{ color:var(--foam); font-size:0.95rem; }
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;
+  background:var(--basalt);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+}
+.hero-art{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  /*opacity:0.9;*/
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(15,27,27,0.78) 0%,rgba(15,27,27,0.56) 48%,rgba(15,27,27,0.14) 100%),linear-gradient(0deg,rgba(15,27,27,0.28),transparent 68%);
+}
+.hero-content{ position:relative; z-index:2; }
+.hero h1{
+  color:var(--foam);
+  font-size:clamp(2.8rem, 6.5vw, 5.6rem);
+  line-height:1.02;
+}
+.hero .lede{
+  color:rgba(244,239,230,0.8);
+  font-size:1.15rem;
+  max-width:36rem;
+}
+
+/* ---------- Section rhythm ---------- */
+.section{ padding:6.5rem 0; }
+.section-sm{ padding:4rem 0; }
+.section-title{
+  font-size:clamp(2rem, 3.6vw, 3rem);
+  max-width:32rem;
+}
+
+/* ---------- Room cards ---------- */
+.room-card{
+  background:var(--foam);
+  border:1px solid var(--line);
+  overflow:hidden;
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.room-card:hover{ transform:translateY(-4px); box-shadow:0 18px 40px rgba(15,27,27,0.12); }
+.room-art{
+  height:230px;
+  width:100%;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.room-card .room-body{ padding:1.75rem; }
+.room-number{
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  color:var(--brass);
+  letter-spacing:0.1em;
+}
+.room-price{
+  font-family:var(--font-mono);
+  font-size:1rem;
+  color:var(--ink-soft);
+}
+.room-meta{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--ink-soft);
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+}
+
+/* ---------- Journal ---------- */
+.journal-hero{ padding:9rem 0 4rem; background:var(--basalt); color:var(--foam); }
+.journal-hero h1{ color:var(--foam); font-size:3.5rem; line-height:1.08; }
+.journal-card{ height:100%; background:var(--foam); border:1px solid var(--line); }
+.journal-card-image{ display:block; width:100%; aspect-ratio:4/3; object-fit:cover; }
+.journal-card-body{ padding:1.5rem; }
+.journal-meta{ font-family:var(--font-mono); font-size:0.72rem; color:var(--ink-soft); letter-spacing:0.08em; text-transform:uppercase; }
+.journal-card h2{ font-size:1.65rem; line-height:1.2; }
+.journal-card h2 a:hover,.journal-back:hover{ color:var(--sea-deep); }
+.journal-article{ max-width:48rem; margin-inline:auto; }
+.journal-article h2{ margin-top:2.5rem; font-size:2rem; }
+.journal-article p{ color:var(--ink-soft); }
+.journal-article-image{ display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
+.journal-back{ font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; border-bottom:1px solid var(--brass); }
+
+/* ---------- Numbered rule list (for real sequences only) ---------- */
+.rule-num{
+  font-family:var(--font-mono);
+  color:var(--brass);
+  font-size:0.85rem;
+  min-width:2.4rem;
+}
+
+/* ---------- Testimonial ---------- */
+.blockquote-tide{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:1.5rem;
+  color:var(--basalt);
+  line-height:1.4;
+}
+
+/* ---------- Footer ---------- */
+footer.site-footer{ background:var(--basalt); color:rgba(244,239,230,0.7); }
+footer.site-footer h5{ color:var(--foam); font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; }
+footer.site-footer a:hover{ color:var(--brass); }
+footer .brand-mark{ font-family:var(--font-display); font-size:1.5rem; color:var(--foam); }
+footer .brand-mark span{ color:var(--brass); }
+
+/* ---------- Forms ---------- */
+.form-control-marram{
+  background:transparent;
+  border:none;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  padding:0.7rem 0.2rem;
+  font-family:var(--font-body);
+  color:var(--ink);
+}
+.form-control-marram:focus{
+  box-shadow:none;
+  border-bottom-color:var(--brass);
+  background:transparent;
+}
+.form-control-marram::placeholder{ color:var(--ink-soft); opacity:0.6; }
+label.form-label-marram{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+
+/* ---------- Misc art blocks (CSS/SVG, no stock photos) ---------- */
+.art-gradient-1{ background:radial-gradient(120% 140% at 20% 10%, #2A4A45 0%, #16302D 45%, #0F1B1B 100%); }
+.art-gradient-2{ background:linear-gradient(160deg, #1B3934 0%, #0F1B1B 100%); }
+.art-gradient-cliff{ background:linear-gradient(180deg, #E8E0D2 0%, #D8CDB6 55%, #B79E76 100%); }
+
+.map-frame{
+  border:1px solid var(--line);
+  filter:grayscale(0.4) contrast(1.05);
+}
+
+/* ---------- Focus visibility ---------- */
+a:focus-visible, button:focus-visible, .btn:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline:2px solid var(--brass);
+  outline-offset:3px;
+}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+.reveal-in{ opacity:1; transform:translateY(0); }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .room-card, .btn-brass, .btn-outline-foam{ transition:none; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:767.98px){
+  .section{ padding:4rem 0; }
+  .journal-hero h1{ font-size:2.6rem; }
+  .tide-strip .tide-item{ border-right:none; border-bottom:1px solid rgba(244,239,230,0.12); }
+  .tide-strip .tide-item:last-child{ border-bottom:none; }
+}
